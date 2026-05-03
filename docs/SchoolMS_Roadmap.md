@@ -171,13 +171,15 @@ edutrack-africa/
 └── package.json          # Workspace root (pnpm workspaces)
 ```
 
+**Status:** Implemented in this repo — root `pnpm-workspace.yaml`, workspace packages `@edutrack/web`, `@edutrack/api`, `@edutrack/shared`, `@edutrack/db`, `@edutrack/ui`, `@edutrack/desktop` (placeholder for Phase 9), `scripts/check-env.mjs`, and `.github/workflows/ci.yml`. From the repo root: `pnpm install`, `pnpm check:env`, `pnpm dev` (web), `pnpm dev:api` (API health on port 3001).
+
 **Tools to install:**
-- [ ] pnpm (package manager — faster than npm, better for monorepos)
-- [ ] Node.js 20 LTS
-- [ ] Rust (required for Tauri)
-- [ ] Tauri CLI
-- [ ] PostgreSQL (local dev instance)
-- [ ] TablePlus or DBeaver (database GUI for development)
+- [x] pnpm (package manager — faster than npm, better for monorepos) — enforced via root `packageManager` + `pnpm-workspace.yaml`
+- [x] Node.js 20 LTS — `engines` in root `package.json`; run `pnpm check:env`
+- [ ] Rust (required for Tauri) — install when starting Phase 9 desktop work
+- [ ] Tauri CLI — same as above
+- [ ] PostgreSQL (local dev instance) — install before cloud DB / API persistence work
+- [ ] TablePlus or DBeaver (database GUI for development) — optional local tool
 
 ---
 
