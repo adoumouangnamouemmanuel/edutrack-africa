@@ -48,3 +48,4 @@ The following technologies are **locked** for this repository unless superseded 
 ## Related
 
 - Phase 0.2 monorepo layout: root `pnpm-workspace.yaml`, `apps/*`, `packages/*`, `scripts/`, `.github/workflows/ci.yml`.
+- Phase 0.3 coding standards: root [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
