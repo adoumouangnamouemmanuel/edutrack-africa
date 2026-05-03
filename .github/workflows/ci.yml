@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,5 +28,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
+      - name: Prettier (check)
+        run: pnpm format:check
+
+      - name: ESLint / TypeScript checks
         run: pnpm lint
+
+      - name: Unit tests (Vitest)
+        run: pnpm test
