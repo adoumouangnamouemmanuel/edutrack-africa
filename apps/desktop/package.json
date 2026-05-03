@@ -1,0 +1,6 @@
+{
+  "name": "@edutrack/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tauri desktop shell — scaffold in Phase 9 (ADR-001)."
+}
