@@ -1,0 +1,20 @@
+{
+  "name": "@edutrack/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "fastify": "^5.2.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.50",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}
