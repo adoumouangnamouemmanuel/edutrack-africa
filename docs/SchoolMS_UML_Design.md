@@ -1591,6 +1591,8 @@ Desktop App (SQLite) ◄──► Sync Engine ◄──► Cloud DB (PostgreSQL)
 └──────────────────────┴────────────────────────────────────────────────┘
 ```
 
+**Implementation lock:** concrete versions and overrides (e.g. Next.js for web, Fastify for API, Drizzle over Prisma) are recorded in [`docs/decisions/ADR-001-locked-technology-stack.md`](decisions/ADR-001-locked-technology-stack.md). Treat that ADR as authoritative when this table and the running codebase differ.
+
 ---
 
 ## Document Information

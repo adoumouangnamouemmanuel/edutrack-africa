@@ -129,20 +129,20 @@ This phase has zero user-facing output. It is invisible but critical. Rushing it
 
 Do not change the stack mid-project. Make decisions now and commit.
 
-**Decision checklist:**
+**Decision checklist:** _(locked — see [`docs/decisions/ADR-001-locked-technology-stack.md`](decisions/ADR-001-locked-technology-stack.md))_
 
-- [ ] **Frontend framework**: React + TypeScript (recommended). Not Vue, not Angular, not plain JS. Pick one.
-- [ ] **Desktop shell**: Tauri (Rust-based, lightweight, ~5MB app vs Electron's 150MB). Good for low-spec school computers.
-- [ ] **Styling**: Tailwind CSS. Fast, consistent, no CSS file chaos.
-- [ ] **Backend**: Node.js + Fastify OR Python + FastAPI. Pick based on your team's strongest language.
-- [ ] **Database (local)**: SQLite via `better-sqlite3` (Node) or `sqlite3` (Python).
-- [ ] **Database (cloud)**: PostgreSQL. Use Supabase for free tier hosting during development.
-- [ ] **ORM**: Drizzle ORM (TypeScript, lightweight, great SQLite + PostgreSQL support).
-- [ ] **PDF generation**: `@react-pdf/renderer` for transcript PDFs.
-- [ ] **Excel handling**: `SheetJS (xlsx)` for import/export.
-- [ ] **Auth**: JWT with `jose` library (Node) or `python-jose` (Python). No third-party auth services — schools need self-hosted.
-- [ ] **i18n**: `i18next` with `react-i18next`. French as default locale.
-- [ ] **Testing**: Vitest + Testing Library (unit/integration), Playwright (end-to-end).
+- [x] **Frontend framework**: React + TypeScript (recommended). Not Vue, not Angular, not plain JS. Pick one. **→ Next.js 16 (App Router) + React 19 + TypeScript** (`apps/web`).
+- [x] **Desktop shell**: Tauri (Rust-based, lightweight, ~5MB app vs Electron's 150MB). Good for low-spec school computers.
+- [x] **Styling**: Tailwind CSS. Fast, consistent, no CSS file chaos. **→ Tailwind CSS v4** (`apps/web`).
+- [x] **Backend**: Node.js + Fastify OR Python + FastAPI. Pick based on your team's strongest language. **→ Node.js 20 LTS + Fastify** (`apps/api/` in later phases).
+- [x] **Database (local)**: SQLite via `better-sqlite3` (Node) or `sqlite3` (Python).
+- [x] **Database (cloud)**: PostgreSQL. Use Supabase for free tier hosting during development.
+- [x] **ORM**: Drizzle ORM (TypeScript, lightweight, great SQLite + PostgreSQL support).
+- [x] **PDF generation**: `@react-pdf/renderer` for transcript PDFs.
+- [x] **Excel handling**: `SheetJS (xlsx)` for import/export.
+- [x] **Auth**: JWT with `jose` library (Node) or `python-jose` (Python). No third-party auth services — schools need self-hosted.
+- [x] **i18n**: `i18next` with `react-i18next`. French as default locale.
+- [x] **Testing**: Vitest + Testing Library (unit/integration), Playwright (end-to-end).
 
 ---
 
