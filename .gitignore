@@ -1,0 +1,16 @@
+node_modules
+dist
+.turbo
+*.log
+.pnpm-debug.log*
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Next.js
+apps/web/.next
+apps/web/out
+
+# TypeScript
+*.tsbuildinfo
