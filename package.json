@@ -3,16 +3,30 @@
   "private": true,
   "packageManager": "pnpm@9.15.4",
   "pnpm": {
-    "ignoredBuiltDependencies": ["sharp", "unrs-resolver"]
+    "ignoredBuiltDependencies": [
+      "sharp",
+      "unrs-resolver"
+    ]
   },
   "engines": {
     "node": ">=20 <23"
   },
   "scripts": {
+    "prepare": "husky",
     "dev": "pnpm --filter @edutrack/web dev",
     "dev:api": "pnpm --filter @edutrack/api dev",
     "check:env": "node scripts/check-env.mjs",
     "build": "pnpm run -r --if-present build",
-    "lint": "pnpm run -r --if-present lint"
+    "lint": "pnpm run -r --if-present lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
   }
 }
