@@ -187,13 +187,15 @@ edutrack-africa/
 
 Write a `CONTRIBUTING.md` with:
 
-- [ ] Naming conventions: `camelCase` for variables, `PascalCase` for classes/components, `snake_case` for database columns.
-- [ ] File structure: one component per file, one service per file.
-- [ ] Commit message format: `feat:`, `fix:`, `chore:`, `docs:`, `test:` prefixes.
-- [ ] Branch strategy: `main` (production), `develop` (integration), `feature/xxx` (features), `fix/xxx` (bug fixes).
-- [ ] Required: all API endpoints must have input validation. No raw DB queries in route handlers.
-- [ ] Required: all amounts (fees, salaries, grades) stored as integers in cents/hundredths to avoid floating point errors. Display layer handles formatting.
-- [ ] Language: all user-facing strings go through i18n keys. No hardcoded French strings in components.
+- [x] Naming conventions: `camelCase` for variables, `PascalCase` for classes/components, `snake_case` for database columns. **→ [`CONTRIBUTING.md`](../CONTRIBUTING.md)**
+- [x] File structure: one component per file, one service per file.
+- [x] Commit message format: `feat:`, `fix:`, `chore:`, `docs:`, `test:` prefixes.
+- [x] Branch strategy: `main` (production), `develop` (integration), `feature/xxx` (features), `fix/xxx` (bug fixes).
+- [x] Required: all API endpoints must have input validation. No raw DB queries in route handlers.
+- [x] Required: all amounts (fees, salaries, grades) stored as integers in cents/hundredths to avoid floating point errors. Display layer handles formatting.
+- [x] Language: all user-facing strings go through i18n keys. No hardcoded French strings in components.
+
+**Status:** See repository root [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 
 ---
 
