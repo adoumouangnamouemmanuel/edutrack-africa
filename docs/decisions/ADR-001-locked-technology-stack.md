@@ -44,3 +44,7 @@ The following technologies are **locked** for this repository unless superseded 
 
 - `docs/SchoolMS_Roadmap.md` — Phase 0.1 checklist
 - `docs/SchoolMS_UML_Design.md` — §13 Technology stack recommendation
+
+## Related
+
+- Phase 0.2 monorepo layout: root `pnpm-workspace.yaml`, `apps/*`, `packages/*`, `scripts/`, `.github/workflows/ci.yml`.
