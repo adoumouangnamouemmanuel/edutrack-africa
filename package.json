@@ -1,0 +1,18 @@
+{
+  "name": "edutrack-africa",
+  "private": true,
+  "packageManager": "pnpm@9.15.4",
+  "pnpm": {
+    "ignoredBuiltDependencies": ["sharp", "unrs-resolver"]
+  },
+  "engines": {
+    "node": ">=20 <23"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @edutrack/web dev",
+    "dev:api": "pnpm --filter @edutrack/api dev",
+    "check:env": "node scripts/check-env.mjs",
+    "build": "pnpm run -r --if-present build",
+    "lint": "pnpm run -r --if-present lint"
+  }
+}
