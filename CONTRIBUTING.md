@@ -4,12 +4,12 @@ This document encodes **Phase 0.3** coding standards for the monorepo. Changes t
 
 ## Naming conventions
 
-| Context | Convention | Examples |
-|--------|--------------|----------|
-| Variables, functions, hooks, file names (non-React) | `camelCase` | `studentId`, `loadTranscript()` |
-| React components, classes, TypeScript types/interfaces | `PascalCase` | `GradeEntryTable`, `TranscriptLine` |
-| Database columns, SQL, Drizzle schema column names | `snake_case` | `first_name`, `school_id`, `created_at` |
-| Route path segments | `kebab-case` is acceptable for URLs; map to `camelCase` in handlers | `/transcript-lines` → `transcriptLineId` in code |
+| Context                                                | Convention                                                          | Examples                                         |
+| ------------------------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------------ |
+| Variables, functions, hooks, file names (non-React)    | `camelCase`                                                         | `studentId`, `loadTranscript()`                  |
+| React components, classes, TypeScript types/interfaces | `PascalCase`                                                        | `GradeEntryTable`, `TranscriptLine`              |
+| Database columns, SQL, Drizzle schema column names     | `snake_case`                                                        | `first_name`, `school_id`, `created_at`          |
+| Route path segments                                    | `kebab-case` is acceptable for URLs; map to `camelCase` in handlers | `/transcript-lines` → `transcriptLineId` in code |
 
 Use meaningful full words where practical; avoid obscure abbreviations unless they are domain-standard (e.g. `fcfa`, `xaf`).
 
@@ -21,12 +21,12 @@ Use meaningful full words where practical; avoid obscure abbreviations unless th
 
 ## Git branches
 
-| Branch | Purpose |
-|--------|---------|
-| `main` | Production-ready releases |
-| `develop` | Integration branch for ongoing work |
-| `feature/<short-description>` | New features |
-| `fix/<short-description>` | Bug fixes |
+| Branch                        | Purpose                             |
+| ----------------------------- | ----------------------------------- |
+| `main`                        | Production-ready releases           |
+| `develop`                     | Integration branch for ongoing work |
+| `feature/<short-description>` | New features                        |
+| `fix/<short-description>`     | Bug fixes                           |
 
 Use short, hyphenated descriptions (e.g. `feature/grade-entry-autosave`).
 
