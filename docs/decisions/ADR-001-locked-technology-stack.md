@@ -50,3 +50,4 @@ The following technologies are **locked** for this repository unless superseded 
 - Phase 0.2 monorepo layout: root `pnpm-workspace.yaml`, `apps/*`, `packages/*`, `scripts/`, `.github/workflows/ci.yml`.
 - Phase 0.3 coding standards: root [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
 - Phase 0.4 development tooling: [`ADR-002-development-tooling.md`](ADR-002-development-tooling.md).
+- Phase 0.5 database package: [`ADR-003-database-drizzle-dual-dialect.md`](ADR-003-database-drizzle-dual-dialect.md).
