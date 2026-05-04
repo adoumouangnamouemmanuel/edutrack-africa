@@ -17,3 +17,4 @@ apps/web/out
 
 # TypeScript
 *.tsbuildinfo
+db_user_pswd.txt

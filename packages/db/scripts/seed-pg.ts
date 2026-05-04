@@ -1,8 +1,17 @@
 import bcrypt from "bcryptjs";
+import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import pg from "pg";
 
 import * as schema from "../src/schema/pg";
+
+// Ensure repo-root .env is loaded when script runs from packages/db
+const pkgRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+// dotenv/config provides basic loading, but ensure correct path in case cwd != repo root
+import dotenv from "dotenv";
+dotenv.config({ path: path.resolve(pkgRoot, "..", "..", ".env") });
 
 async function main() {
   const connectionString = process.env.DATABASE_URL;

@@ -54,7 +54,7 @@ jobs:
           --health-timeout 5s
           --health-retries 12
     env:
-      DATABASE_URL: postgresql://edutrack:edutrack@localhost:5432/edutrack
+      DATABASE_URL: postgresql://edutrack:EDU90062033track@localhost:5433/edutrack
     steps:
       - uses: actions/checkout@v4
 
