@@ -162,13 +162,13 @@ async function main() {
       },
       {
         school_id: schoolId,
-        name: "Sciences Physiques",
-        code: "PHY",
+        name: "Physique-Chimie",
+        code: "PC",
         description: "Physique et sciences naturelles",
       },
       {
         school_id: schoolId,
-        name: "Sciences Naturelles",
+        name: "Sciences de la Vie et de la Terre",
         code: "SVT",
         description: "Biologie et sciences de la vie",
       },
