@@ -217,11 +217,13 @@ Write a `CONTRIBUTING.md` with:
 
 ### 0.5 — Set Up the Database Project
 
-- [ ] Initialize Drizzle ORM in `packages/db/`
-- [ ] Write the migration for the first 3 tables: `school`, `academic_year`, `user`
-- [ ] Set up `seed.ts` script that creates a demo school with test data
-- [ ] Confirm migrations run on both SQLite (local/desktop) and PostgreSQL (cloud)
-- [ ] Document all table schemas in `docs/database/`
+- [x] Initialize Drizzle ORM in `packages/db/`
+- [x] Write the migration for the first 3 tables: `school`, `academic_year`, `user`
+- [x] Set up `seed.ts` script that creates a demo school with test data — `scripts/seed-sqlite.mts` / `scripts/seed-pg.mts`; root `pnpm db:seed` / `pnpm db:seed:pg`
+- [x] Confirm migrations run on both SQLite (local/desktop) and PostgreSQL (cloud) — CI job `postgres-drizzle`; local: `pnpm db:migrate` / `pnpm db:migrate:pg` with `DATABASE_URL`
+- [x] Document all table schemas in `docs/database/` — [`schema-overview.md`](database/schema-overview.md)
+
+**ADR:** [`ADR-003-database-drizzle-dual-dialect.md`](decisions/ADR-003-database-drizzle-dual-dialect.md)
 
 **Deliverable at end of Phase 0:**
 A developer can clone the repo, run `pnpm install && pnpm db:migrate && pnpm db:seed` and have a working local database. They can run `pnpm dev` and see a "Hello EduTrack" screen on both the web app and the desktop app.
