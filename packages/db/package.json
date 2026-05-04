@@ -4,12 +4,33 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./schema/sqlite": "./src/schema/sqlite.ts",
+    "./schema/pg": "./src/schema/pg.ts"
   },
   "scripts": {
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate --config drizzle.config.sqlite.ts && drizzle-kit generate --config drizzle.config.pg.ts",
+    "db:migrate": "tsx scripts/migrate-sqlite.ts",
+    "db:migrate:pg": "tsx scripts/migrate-pg.ts",
+    "db:seed": "tsx scripts/seed-sqlite.ts",
+    "db:seed:pg": "tsx scripts/seed-pg.ts",
+    "db:studio": "drizzle-kit studio --config drizzle.config.sqlite.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.10.0",
+    "drizzle-orm": "^0.41.0",
+    "pg": "^8.14.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^20.17.50",
+    "@types/pg": "^8.11.12",
+    "drizzle-kit": "^0.31.1",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
 }
