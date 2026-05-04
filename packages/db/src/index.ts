@@ -1,4 +1,14 @@
 /**
- * Drizzle schema, migrations, and seed scripts will live here (Phase 0.5 / Phase 1).
+ * @edutrack/db — Drizzle schema, migrations, and seeds.
+ * Runtime entry: import table symbols from `@edutrack/db/schema` (see package.json exports).
  */
-export {};
+export {
+  academicYear,
+  academicYearPg,
+  pgSchema,
+  school,
+  schoolPg,
+  sqliteSchema,
+  user,
+  userPg,
+} from "./schema";
