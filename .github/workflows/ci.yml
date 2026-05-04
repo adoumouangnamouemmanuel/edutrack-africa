@@ -39,15 +39,14 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:18-alpine
+        image: postgres:18
         env:
           POSTGRES_USER: edutrack
           POSTGRES_PASSWORD: EDU90062033track
           POSTGRES_DB: edutrack
-        ports:
-          - 5433:5432
+          DATABASE_URL: postgresql://edutrack:EDU90062033track@127.0.0.1:5433/edutrack
         options: >-
-          --health-cmd "pg_isready -U edutrack -d edutrack -h localhost -p 5432"
+          --health-cmd pg_isready
           --health-interval 5s
           --health-timeout 5s
           --health-retries 12
