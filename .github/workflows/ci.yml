@@ -44,14 +44,15 @@ jobs:
           POSTGRES_USER: edutrack
           POSTGRES_PASSWORD: EDU90062033track
           POSTGRES_DB: edutrack
-          DATABASE_URL: postgresql://edutrack:EDU90062033track@127.0.0.1:5433/edutrack
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 5s
           --health-timeout 5s
           --health-retries 12
     env:
-      DATABASE_URL: postgresql://edutrack:EDU90062033track@127.0.0.1:5433/edutrack
+      DATABASE_URL: postgresql://edutrack:EDU90062033track@127.0.0.1:5432/edutrack
     steps:
       - uses: actions/checkout@v4
 
