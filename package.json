@@ -20,7 +20,13 @@
     "lint": "pnpm run -r --if-present lint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "db:generate": "pnpm --filter @edutrack/db db:generate",
+    "db:migrate": "pnpm --filter @edutrack/db db:migrate",
+    "db:migrate:pg": "pnpm --filter @edutrack/db db:migrate:pg",
+    "db:seed": "pnpm --filter @edutrack/db db:seed",
+    "db:seed:pg": "pnpm --filter @edutrack/db db:seed:pg",
+    "db:studio": "pnpm --filter @edutrack/db db:studio"
   },
   "devDependencies": {
     "husky": "^9.1.7",
