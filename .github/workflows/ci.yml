@@ -42,10 +42,10 @@ jobs:
         image: postgres:16-alpine
         env:
           POSTGRES_USER: edutrack
-          POSTGRES_PASSWORD: edutrack
+          POSTGRES_PASSWORD: EDU90062033track
           POSTGRES_DB: edutrack
         ports:
-          - 5432:5432
+          - 5433:5433
         options: >-
           --health-cmd "pg_isready -U edutrack -d edutrack"
           --health-interval 5s
