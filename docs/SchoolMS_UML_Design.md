@@ -1,5 +1,7 @@
 # 🏫 EduTrack Africa — School Management System
+
 ## Complete UML & Architecture Design Document
+
 ### Designed for Schools in Chad and Across Africa
 
 ---
@@ -39,6 +41,7 @@
 **EduTrack Africa** is a comprehensive, multi-functional School Management System (SMS) designed primarily for African schools — starting with Chad — where digital school management infrastructure is limited or absent.
 
 ### Key Principles
+
 - **Multi-tenant**: Each school is configured independently with its own name, logo, classes, and fee structures.
 - **Role-based**: Distinct interfaces and access levels for School Master, Teachers, and Students.
 - **Offline-first Desktop + Web**: Primary desktop application (Electron/Tauri), with a synchronized web interface.
@@ -1384,7 +1387,7 @@ SchoolMaster     ImportUI        ImportExportService      Validator        Stude
 ```sql
 -- Core Tables (simplified DDL)
 
-school (id, name, short_name, logo_url, address, city, country, phone, email, 
+school (id, name, short_name, logo_url, address, city, country, phone, email,
         motto, ministry_code, school_type, default_language, created_at)
 
 academic_year (id, school_id, label, start_date, end_date, is_current, grading_system)
@@ -1394,12 +1397,12 @@ term (id, academic_year_id, label, term_number, start_date, end_date, is_current
 
 class_level (id, school_id, name, code, order_index, description, is_exam_year)
 
-classroom (id, class_level_id, academic_year_id, section, room_number, capacity, 
+classroom (id, class_level_id, academic_year_id, section, room_number, capacity,
            head_teacher_id)
 
 subject (id, school_id, name, code, category, default_coefficient, description)
 
-class_subject (id, classroom_id, subject_id, teacher_id, coefficient, 
+class_subject (id, classroom_id, subject_id, teacher_id, coefficient,
                hours_per_week, is_optional)
 
 -- User & Auth
@@ -1409,32 +1412,32 @@ user (id, school_id, username, password_hash, role, is_active, last_login,
 
 -- Student Tables
 
-student (id, user_id, school_id, student_code, first_name, last_name, 
-         date_of_birth, gender, address, phone, email, nationality, 
+student (id, user_id, school_id, student_code, first_name, last_name,
+         date_of_birth, gender, address, phone, email, nationality,
          profile_photo_url, status, enrollment_date, created_at, updated_at)
 
-parent (id, student_id, relation, first_name, last_name, phone, email, 
+parent (id, student_id, relation, first_name, last_name, phone, email,
         address, occupation, is_emergency_contact)
 
-class_enrollment (id, student_id, classroom_id, academic_year_id, 
+class_enrollment (id, student_id, classroom_id, academic_year_id,
                   enrollment_date, is_active, transfer_reason)
 
 -- Teacher Tables
 
-teacher (id, user_id, school_id, employee_code, first_name, last_name, 
-         date_of_birth, gender, address, phone, email, nationality, 
-         qualification, specialization, hire_date, profile_photo_url, 
+teacher (id, user_id, school_id, employee_code, first_name, last_name,
+         date_of_birth, gender, address, phone, email, nationality,
+         qualification, specialization, hire_date, profile_photo_url,
          status, created_at, updated_at)
 
-family_member (id, teacher_id, relation, first_name, last_name, 
+family_member (id, teacher_id, relation, first_name, last_name,
                date_of_birth, phone)
 
-salary (id, teacher_id, gross_amount, net_amount, deductions, pay_period, 
+salary (id, teacher_id, gross_amount, net_amount, deductions, pay_period,
         payment_date, payment_method, status, notes)
 
 -- Grades & Transcripts
 
-transcript (id, student_id, classroom_id, term_id, academic_year_id, 
+transcript (id, student_id, classroom_id, term_id, academic_year_id,
             overall_average, appreciation, rank_in_class, total_coefficient,
             total_weighted_score, is_passed, is_finalized, digital_signature,
             signed_by, signed_at, generated_at)
@@ -1453,10 +1456,10 @@ fee_payment (id, student_id, fee_schedule_id, amount_paid, payment_date,
 
 -- Timetable
 
-timetable (id, classroom_id, academic_year_id, term_id, created_at, 
+timetable (id, classroom_id, academic_year_id, term_id, created_at,
            updated_at, is_published)
 
-timetable_slot (id, timetable_id, class_subject_id, day_of_week, 
+timetable_slot (id, timetable_id, class_subject_id, day_of_week,
                 start_time, end_time, room)
 
 academic_event (id, school_id, title, description, event_type, start_date,
@@ -1464,7 +1467,7 @@ academic_event (id, school_id, title, description, event_type, start_date,
 
 -- Resources
 
-learning_resource (id, school_id, title, description, resource_type, 
+learning_resource (id, school_id, title, description, resource_type,
                    file_url, subject_id, class_level_id, uploaded_by,
                    is_public, tags, download_count, created_at)
 
@@ -1527,30 +1530,37 @@ CREATE INDEX idx_fee_student         ON fee_payment(student_id);
 ## 12. Scalability & Modularity Notes
 
 ### Multi-Tenant Architecture
+
 Each `school_id` acts as a tenant boundary. All queries are scoped to the school, enabling future:
+
 - **School Network / Federation**: A single deployment serving multiple schools under one administration.
 - **SaaS Mode**: Cloud deployment where each school subscribes and has isolated data.
 
 ### Module Activation System
+
 Each school can enable or disable modules via a `SchoolModuleConfig` table:
+
 ```
 school_module_config (school_id, module_name, is_enabled, config_json)
 ```
+
 Disabled modules are hidden from the UI. This keeps the system lightweight for schools that don't need all features.
 
 ### Extensibility Points
-| Extension Point         | How to Extend                                          |
-|------------------------|--------------------------------------------------------|
-| New grading system      | Add new AppreciationScale or override per school       |
-| New user role           | Add to Role enum + permission matrix                   |
-| New report type         | Implement new method in ReportingService               |
-| New file import format  | Add new parser in ImportExportService                  |
-| New subject category    | Extend Subject.category enum                           |
-| New payment method      | Extend FeePayment.payment_method enum                  |
-| SMS providers           | Implement NotificationGateway interface                |
-| Multiple languages      | i18n keys stored per school, override per UI string    |
+
+| Extension Point        | How to Extend                                       |
+| ---------------------- | --------------------------------------------------- |
+| New grading system     | Add new AppreciationScale or override per school    |
+| New user role          | Add to Role enum + permission matrix                |
+| New report type        | Implement new method in ReportingService            |
+| New file import format | Add new parser in ImportExportService               |
+| New subject category   | Extend Subject.category enum                        |
+| New payment method     | Extend FeePayment.payment_method enum               |
+| SMS providers          | Implement NotificationGateway interface             |
+| Multiple languages     | i18n keys stored per school, override per UI string |
 
 ### Offline-First Sync Strategy
+
 ```
 Desktop App (SQLite) ◄──► Sync Engine ◄──► Cloud DB (PostgreSQL)
                             │
@@ -1597,17 +1607,17 @@ Desktop App (SQLite) ◄──► Sync Engine ◄──► Cloud DB (PostgreSQL)
 
 ## Document Information
 
-| Field         | Value                                      |
-|---------------|--------------------------------------------|
-| Project Name  | EduTrack Africa                            |
-| Document Type | UML Architecture Design                    |
-| Version       | 1.0.0                                      |
-| Target Region | Chad (primary) · Africa (scalable)         │
-| Language      | French (primary UI) · English (docs)       │
-| Author        | System Architect                           |
-| Date          | May 2026                                   |
-| Status        | Initial Design — Ready for Development     |
+| Field         | Value                                  |
+| ------------- | -------------------------------------- |
+| Project Name  | EduTrack Africa                        |
+| Document Type | UML Architecture Design                |
+| Version       | 1.0.0                                  |
+| Target Region | Chad (primary) · Africa (scalable) │   |
+| Language      | French (primary UI) · English (docs) │ |
+| Author        | System Architect                       |
+| Date          | May 2026                               |
+| Status        | Initial Design — Ready for Development |
 
 ---
 
-*This document is the complete UML and architecture foundation for EduTrack Africa. Each module is designed to be independently developed, tested, and deployed. The system scales from a single classroom to a nationwide school network.*
+_This document is the complete UML and architecture foundation for EduTrack Africa. Each module is designed to be independently developed, tested, and deployed. The system scales from a single classroom to a nationwide school network._

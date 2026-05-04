@@ -1,5 +1,7 @@
 # 🗺️ EduTrack Africa — Development Roadmap
+
 ## From Zero to Full School Management System
+
 ### A Detailed, Phase-by-Phase Build Plan
 
 ---
@@ -119,6 +121,7 @@ to accelerate boilerplate. Always prioritize backend correctness over UI beauty.
 ---
 
 ## Phase 0 — Foundation & Setup
+
 ### Weeks 1–2 | Milestone: Dev environment ready, project scaffolded
 
 This phase has zero user-facing output. It is invisible but critical. Rushing it causes pain for the next 18 months.
@@ -174,6 +177,7 @@ edutrack-africa/
 **Status:** Implemented in this repo — root `pnpm-workspace.yaml`, workspace packages `@edutrack/web`, `@edutrack/api`, `@edutrack/shared`, `@edutrack/db`, `@edutrack/ui`, `@edutrack/desktop` (placeholder for Phase 9), `scripts/check-env.mjs`, and `.github/workflows/ci.yml`. From the repo root: `pnpm install`, `pnpm check:env`, `pnpm dev` (web), `pnpm dev:api` (API health on port 3001).
 
 **Tools to install:**
+
 - [x] pnpm (package manager — faster than npm, better for monorepos) — enforced via root `packageManager` + `pnpm-workspace.yaml`
 - [x] Node.js 20 LTS — `engines` in root `package.json`; run `pnpm check:env`
 - [ ] Rust (required for Tauri) — install when starting Phase 9 desktop work
@@ -201,11 +205,13 @@ Write a `CONTRIBUTING.md` with:
 
 ### 0.4 — Set Up Development Tooling
 
-- [ ] ESLint + Prettier (code quality and formatting)
-- [ ] Husky + lint-staged (pre-commit hooks — block bad code from entering the repo)
-- [ ] GitHub Actions workflow for CI: run tests on every push to `develop`
-- [ ] Environment variables: `.env.example` file with all required variables documented
-- [ ] Create `docs/decisions/` folder — write an ADR (Architecture Decision Record) for every major choice. Example: `ADR-001-why-tauri-over-electron.md`
+- [x] ESLint + Prettier (code quality and formatting) — Prettier at repo root; ESLint + `eslint-config-prettier` in `apps/web`. **→ [`ADR-002-development-tooling.md`](decisions/ADR-002-development-tooling.md)**
+- [x] Husky + lint-staged (pre-commit hooks — block bad code from entering the repo) — `.husky/pre-commit`, `lint-staged.config.mjs`, root `prepare` script.
+- [x] GitHub Actions workflow for CI: run tests on every push to `develop` — `.github/workflows/ci.yml` runs `pnpm format:check`, `pnpm lint`, and `pnpm test` on `main` / `develop` / `master` (includes pushes to `develop`).
+- [x] Environment variables: `.env.example` file with all required variables documented — root `.env.example` plus `apps/web/.env.example` and `apps/api/.env.example`.
+- [x] Create `docs/decisions/` folder — write an ADR (Architecture Decision Record) for every major choice. Example: `ADR-001-why-tauri-over-electron.md` — folder in use; **tooling ADR:** [`ADR-002-development-tooling.md`](decisions/ADR-002-development-tooling.md).
+
+**Status:** `pnpm format:check`, `pnpm lint`, `pnpm test`; `pnpm install` enables Husky via `prepare`.
 
 ---
 
@@ -223,6 +229,7 @@ A developer can clone the repo, run `pnpm install && pnpm db:migrate && pnpm db:
 ---
 
 ## Phase 1 — Core Backend & Database
+
 ### Weeks 3–6 | Milestone: All database tables created, base API running
 
 Do not build any UI yet. Solid foundations here mean everything else is easier.
@@ -234,6 +241,7 @@ Do not build any UI yet. Solid foundations here mean everything else is easier.
 Write migrations for every table defined in the UML, in dependency order:
 
 **Week 3 — Core entities:**
+
 - [ ] `school`
 - [ ] `academic_year`
 - [ ] `term`
@@ -241,6 +249,7 @@ Write migrations for every table defined in the UML, in dependency order:
 - [ ] `user`
 
 **Week 4 — People entities:**
+
 - [ ] `student`
 - [ ] `parent`
 - [ ] `teacher`
@@ -248,12 +257,14 @@ Write migrations for every table defined in the UML, in dependency order:
 - [ ] `salary`
 
 **Week 5 — Curriculum & Classes:**
+
 - [ ] `subject`
 - [ ] `classroom`
 - [ ] `class_subject`
 - [ ] `class_enrollment`
 
 **Week 6 — Grades, Finance, Timetable, Resources:**
+
 - [ ] `transcript`
 - [ ] `transcript_line`
 - [ ] `fee_schedule`
@@ -266,6 +277,7 @@ Write migrations for every table defined in the UML, in dependency order:
 - [ ] `school_module_config`
 
 **For each migration, also write:**
+
 - [ ] The down migration (rollback)
 - [ ] All necessary indexes (see Database Schema section of UML)
 - [ ] Constraints: NOT NULL, UNIQUE, FOREIGN KEY with CASCADE rules
@@ -335,6 +347,7 @@ apps/api/src/
 ```
 
 **Standard API response format — define this now, never change it:**
+
 ```json
 {
   "success": true,
@@ -349,6 +362,7 @@ apps/api/src/
 ```
 
 For errors:
+
 ```json
 {
   "success": false,
@@ -380,6 +394,7 @@ These are pure functions used across many modules. Build them once, test them th
 ### 1.5 — Create Comprehensive Seed Data
 
 Build a seed script that creates a realistic demo school:
+
 - [ ] 1 school: "Lycée Félix Éboué de N'Djamena"
 - [ ] 1 academic year with 3 terms
 - [ ] 5 class levels: 6ème, 5ème, 4ème, 3ème, Terminale
@@ -396,6 +411,7 @@ This seed data is your development companion for the next 18 months. Make it rea
 ---
 
 ## Phase 2 — Authentication & School Configuration
+
 ### Weeks 7–9 | Milestone: A real school master can log in and configure their school
 
 This is the first phase with real UI. Keep it simple — functional over beautiful.
@@ -405,6 +421,7 @@ This is the first phase with real UI. Keep it simple — functional over beautif
 ### 2.1 — Authentication System
 
 **Backend tasks:**
+
 - [ ] `POST /auth/login` — validate credentials, return JWT + refresh token
 - [ ] `POST /auth/refresh` — exchange refresh token for new access token
 - [ ] `POST /auth/logout` — invalidate refresh token
@@ -415,6 +432,7 @@ This is the first phase with real UI. Keep it simple — functional over beautif
 - [ ] Separate login endpoint behavior per role (different redirect targets)
 
 **Frontend tasks:**
+
 - [ ] Login page (French): email/username + password, show/hide password toggle
 - [ ] "Mot de passe oublié" flow (if email configured)
 - [ ] JWT storage: store in memory (not localStorage). Refresh token in httpOnly cookie.
@@ -441,12 +459,14 @@ This is the first phase with real UI. Keep it simple — functional over beautif
 Build a "Setup Wizard" that walks through:
 
 **Step 1 — School Identity**
+
 - [ ] Form: School name, short name, address, city, phone, email, motto
 - [ ] Logo upload: drag & drop, preview, crop
 - [ ] Ministry registration code (optional)
 - [ ] School type: Public / Privé / Confessionnel
 
 **Step 2 — Academic Year Setup**
+
 - [ ] Create academic year (e.g., "2024–2025")
 - [ ] Set start date and end date
 - [ ] Choose grading system: Trimestres (3 terms) or Semestres (2 semesters)
@@ -455,12 +475,14 @@ Build a "Setup Wizard" that walks through:
 - [ ] Mark one year as "current"
 
 **Step 3 — Class Levels**
+
 - [ ] Add class levels (Sixième, Cinquième, Quatrième, Troisième, Seconde, Première, Terminale, etc.)
 - [ ] Set order index for each level (for sorting)
 - [ ] Mark if this level has a national exam (Brevet, BAC)
 - [ ] Allow custom levels for primary schools (CP, CE1, CE2, CM1, CM2)
 
 **Step 4 — Subject Catalog**
+
 - [ ] Add all subjects the school teaches
 - [ ] For each subject: name (French), code, category (Sciences, Lettres, etc.), default coefficient
 - [ ] Pre-populate with common Chadian curriculum subjects:
@@ -469,11 +491,13 @@ Build a "Setup Wizard" that walks through:
   - Histoire-Géographie (coeff 2), EPS (coeff 1), etc.
 
 **Step 5 — Fee Structure**
+
 - [ ] For each class level + current academic year: set total fees
 - [ ] Currency defaults to FCFA (XAF)
 - [ ] Option to allow installment payments
 
 **All steps:**
+
 - [ ] Save progress after each step
 - [ ] Allow returning to any step to edit
 - [ ] "Configuration terminée" confirmation screen with summary
@@ -491,6 +515,7 @@ Build a "Setup Wizard" that walks through:
 ---
 
 ## Phase 3 — Student & Teacher Modules
+
 ### Weeks 10–14 | Milestone: Full student and teacher profiles can be created, searched, and managed
 
 ---
@@ -498,6 +523,7 @@ Build a "Setup Wizard" that walks through:
 ### 3.1 — Student Management
 
 **Week 10 — Student CRUD:**
+
 - [ ] `GET /students` — paginated list with search/filter (by name, class, status)
 - [ ] `GET /students/:id` — full student profile
 - [ ] `POST /students` — create student
@@ -506,6 +532,7 @@ Build a "Setup Wizard" that walks through:
 - [ ] Auto-generate student code on creation
 
 **Student form fields (validate all):**
+
 - [ ] First name, Last name (required)
 - [ ] Date of birth → auto-compute age
 - [ ] Gender
@@ -518,12 +545,14 @@ Build a "Setup Wizard" that walks through:
 - [ ] Enrollment date
 
 **Week 11 — Parent/Guardian information:**
+
 - [ ] Add up to 3 parents/guardians per student
 - [ ] For each: relation, first name, last name, phone, email, address, occupation
 - [ ] Mark primary emergency contact
 - [ ] Edit/remove parent records
 
 **Week 12 — Student list UI:**
+
 - [ ] Data table with columns: Photo, Code, Name, Class, Status, Actions
 - [ ] Search bar (searches name, code)
 - [ ] Filter by class level, class section, status
@@ -531,6 +560,7 @@ Build a "Setup Wizard" that walks through:
 - [ ] Bulk actions: export selected to Excel, change class
 
 **Week 13 — Student profile page:**
+
 - [ ] Header: photo, name, code, class, status badge
 - [ ] Tabs: Informations personnelles, Parents, Scolarité, Notes, Frais scolaires
 - [ ] Each tab loads its data lazily
@@ -541,11 +571,13 @@ Build a "Setup Wizard" that walks through:
 ### 3.2 — Teacher Management
 
 **Week 13 — Teacher CRUD:**
+
 - [ ] Same pattern as students: list, create, update, delete
 - [ ] `GET /teachers`, `POST /teachers`, `PUT /teachers/:id`
 - [ ] Auto-generate employee code
 
 **Teacher form fields:**
+
 - [ ] All personal fields (same as student)
 - [ ] Qualification (highest diploma level)
 - [ ] Specialization (main subject expertise)
@@ -553,6 +585,7 @@ Build a "Setup Wizard" that walks through:
 - [ ] Contract type: Permanent / Contractuel / Vacataire
 
 **Week 14 — Family and salary sections:**
+
 - [ ] Add family members (spouse, children, parents)
 - [ ] Each family member: relation, name, date of birth, phone
 - [ ] Salary history table: shows all salary payments
@@ -561,12 +594,14 @@ Build a "Setup Wizard" that walks through:
 - [ ] Export salary slip to PDF (simple one-page document)
 
 **Teacher profile page:**
+
 - [ ] Tabs: Informations, Famille, Matières enseignées, Salaires, Emploi du temps
 - [ ] "Matières enseignées" tab: list of all classrooms and subjects assigned to this teacher
 
 ---
 
 ## Phase 4 — Class & Curriculum Management
+
 ### Weeks 15–17 | Milestone: Classes are set up, subjects assigned, teachers assigned
 
 ---
@@ -592,6 +627,7 @@ This is the curriculum configuration — the most important setup step for trans
 - [ ] Show warning if a teacher is assigned to more than X hours/week (overload alert)
 
 **UI for this: "Grille horaire de la classe"** — a table showing:
+
 ```
 Matière          | Enseignant       | Coefficient | H/Semaine
 ─────────────────┼──────────────────┼─────────────┼──────────
@@ -619,6 +655,7 @@ Français         | M. Jean-Pierre N.|      4      |    5h
 ---
 
 ## Phase 5 — Grades & Transcript Engine
+
 ### Weeks 18–23 | Milestone: Teachers can enter grades; transcripts auto-compute and display correctly
 
 This is the **heart of the system**. Take the most time here. Test obsessively.
@@ -641,11 +678,13 @@ This is the **heart of the system**. Take the most time here. Test obsessively.
 This is the most-used interface in the entire system. It must be fast, reliable, and easy.
 
 **Teacher selects:**
+
 1. Their assigned class (from a dropdown of their classes)
 2. Their subject (auto-filtered to their assignments)
 3. The current term (pre-selected, can change)
 
 **Then they see a grade entry table:**
+
 ```
 N° | Nom & Prénom          | Note (/20) | Absences | Commentaire
 ───┼───────────────────────┼────────────┼──────────┼─────────────
@@ -656,6 +695,7 @@ N° | Nom & Prénom          | Note (/20) | Absences | Commentaire
 ```
 
 **Grade entry rules:**
+
 - [ ] Input must be between 0.00 and 20.00 (validate in real-time)
 - [ ] Accept decimal with comma OR period (French keyboard uses comma: "14,5" = 14.5)
 - [ ] Tab key moves to next student (keyboard-first workflow for speed)
@@ -669,6 +709,7 @@ N° | Nom & Prénom          | Note (/20) | Absences | Commentaire
 - [ ] Show validation status: "3/8 matières validées"
 
 **Backend:**
+
 - [ ] `GET /transcripts/entry?classroomId=X&subjectId=Y&termId=Z` — returns the list of students with their current grade
 - [ ] `PUT /transcript-lines/:id` — update one grade
 - [ ] `POST /transcript-lines/bulk-save` — save all grades for one subject at once
@@ -682,6 +723,7 @@ N° | Nom & Prénom          | Note (/20) | Absences | Commentaire
 This runs after all grades for a class are validated, or on-demand.
 
 **`computeTranscript(transcriptId)`:**
+
 ```
 For each transcript_line:
   1. weighted_score = grade_value × coefficient
@@ -697,6 +739,7 @@ For the transcript:
 ```
 
 **`computeClassRanks(classroomId, termId)`:**
+
 ```
 1. Get all transcripts for classroom + term
 2. Sort by overall_average descending
@@ -758,6 +801,7 @@ export function isPassed(average: number): boolean { return average >= 10.00; }
 ---
 
 ## Phase 6 — Finance Module
+
 ### Weeks 24–26 | Milestone: School can record and track student fee payments
 
 ---
@@ -794,6 +838,7 @@ export function isPassed(average: number): boolean { return average >= 10.00; }
 ---
 
 ## Phase 7 — Timetable & Academic Calendar
+
 ### Weeks 27–29 | Milestone: Classes have timetables; students can view their schedule
 
 ---
@@ -828,6 +873,7 @@ export function isPassed(average: number): boolean { return average >= 10.00; }
 ---
 
 ## Phase 8 — Import / Export & Excel Integration
+
 ### Weeks 30–32 | Milestone: School can populate the system from Excel in minutes
 
 This phase dramatically reduces setup time for new schools.
@@ -856,6 +902,7 @@ Create professionally formatted Excel templates (in French) that schools fill in
 ### 8.2 — Import Engine
 
 For each template:
+
 - [ ] Parse Excel file with SheetJS
 - [ ] Map columns to entity fields
 - [ ] Validate each row (required fields, data types, valid values)
@@ -866,6 +913,7 @@ For each template:
 - [ ] Error rows can be downloaded as Excel for correction and re-import
 
 **Grade import specifically:**
+
 - [ ] Match student by code OR by exact name match
 - [ ] Match subject by name or code
 - [ ] Only update grades that are not yet validated
@@ -885,6 +933,7 @@ For each template:
 ---
 
 ## Phase 9 — Desktop App Packaging
+
 ### Weeks 33–35 | Milestone: The app can be installed on a Windows PC and works offline
 
 ---
@@ -936,6 +985,7 @@ For each template:
 ---
 
 ## Phase 10 — Student Portal & Resources
+
 ### Weeks 36–38 | Milestone: Students can log in and see their profile, grades, fees, and resources
 
 ---
@@ -943,6 +993,7 @@ For each template:
 ### 10.1 — Student Dashboard
 
 After login, student sees:
+
 - [ ] Welcome message with their name and class
 - [ ] Current term name and days remaining
 - [ ] Quick stats: overall average (if computed), rank (if computed)
@@ -987,6 +1038,7 @@ After login, student sees:
 - [ ] Track download count (for teachers to see what's popular)
 
 **Teacher resource management:**
+
 - [ ] Teacher uploads: drag & drop file or paste a link
 - [ ] Set title, description, subject, target level
 - [ ] Toggle visibility: visible to students or draft only
@@ -995,6 +1047,7 @@ After login, student sees:
 ---
 
 ## Phase 11 — Reporting & Analytics
+
 ### Weeks 39–42 | Milestone: School master has full visibility into school performance
 
 ---
@@ -1002,6 +1055,7 @@ After login, student sees:
 ### 11.1 — School Dashboard (School Master)
 
 Real-time summary of the school:
+
 - [ ] Total students (active), by class level breakdown
 - [ ] Transcripts status: X% of all transcripts finalized for current term
 - [ ] School-wide pass rate for current term
@@ -1014,6 +1068,7 @@ Real-time summary of the school:
 ### 11.2 — Class-Level Reports
 
 For each class or class level:
+
 - [ ] Full results table: student, average, rank, passed/failed
 - [ ] Statistics: class average, highest, lowest, standard deviation
 - [ ] Pass rate (% passed)
@@ -1055,6 +1110,7 @@ For each class or class level:
 ---
 
 ## Phase 12 — Digital Signatures & PDF Engine
+
 ### Weeks 43–45 | Milestone: Official transcripts can be digitally signed and exported as PDFs
 
 ---
@@ -1076,15 +1132,18 @@ For each class or class level:
 Design the official transcript PDF with maximum precision:
 
 **Header:**
+
 - [ ] Republic of Chad header (République du Tchad)
 - [ ] Ministry of Education line
 - [ ] School name and logo
 - [ ] "BULLETIN DE NOTES" title, term and academic year
 
 **Student info block:**
+
 - [ ] Name, class, student code, school year
 
 **Grades table:**
+
 ```
 Matières          | Note /20 | Coeff | Points | Mention
 ──────────────────┼──────────┼───────┼────────┼──────────
@@ -1098,15 +1157,18 @@ MOYENNE GÉNÉRALE  |   13.78  |       |        | Bien
 ```
 
 **Results block:**
+
 - [ ] Moyenne générale, Mention, Rang dans la classe, Élèves notés
 - [ ] Résultat: ADMIS / AJOURNÉ
 
 **Signature block:**
+
 - [ ] "Le Directeur / La Directrice", signature placeholder, date
 - [ ] Digital signature indicator with verification hash (small print)
 - [ ] School stamp area
 
 **Footer:**
+
 - [ ] School address, contact info
 - [ ] "Ce bulletin est généré et signé numériquement par EduTrack Africa"
 
@@ -1122,6 +1184,7 @@ MOYENNE GÉNÉRALE  |   13.78  |       |        | Bien
 ---
 
 ## Phase 13 — Notifications & Communication
+
 ### Weeks 46–47 | Milestone: School master can send announcements; users receive alerts
 
 ---
@@ -1151,6 +1214,7 @@ MOYENNE GÉNÉRALE  |   13.78  |       |        | Bien
 ---
 
 ## Phase 14 — Testing, QA & Hardening
+
 ### Weeks 48–51 | Milestone: System is reliable, secure, and ready for real schools
 
 Testing is not a final phase — it runs in parallel from Phase 1. This phase is **dedicated hardening**.
@@ -1160,6 +1224,7 @@ Testing is not a final phase — it runs in parallel from Phase 1. This phase is
 ### 14.1 — Unit Tests
 
 Target 80%+ coverage on:
+
 - [ ] `AppreciationCalculator` — all boundary values
 - [ ] `AverageCalculator` — weighted average with various coefficient combinations
 - [ ] `AuthService` — login, token generation, permission checking
@@ -1223,6 +1288,7 @@ Target 80%+ coverage on:
 ---
 
 ## Phase 15 — Pilot Deployment
+
 ### Weeks 52–56 | Milestone: 1–2 real schools using the system for a full term
 
 ---
@@ -1263,6 +1329,7 @@ Target 80%+ coverage on:
 ### 15.4 — Pilot Success Criteria
 
 The pilot is successful if:
+
 - [ ] School master can configure the full school setup without external help
 - [ ] Teachers can enter all grades for one full term without training support
 - [ ] Transcripts are generated correctly (verified against manually computed ones)
@@ -1272,6 +1339,7 @@ The pilot is successful if:
 ---
 
 ## Phase 16 — Scale & Multi-School
+
 ### Weeks 57–64 | Milestone: System supports 10+ schools, cloud sync operational
 
 ---
@@ -1307,6 +1375,7 @@ The pilot is successful if:
 ### 16.4 — School Onboarding Flow
 
 As more schools join:
+
 - [ ] SuperAdmin creates a new school tenant with a few clicks
 - [ ] New school master receives login credentials by email or SMS
 - [ ] First login triggers the setup wizard
@@ -1415,5 +1484,5 @@ That is your north star.
 
 ---
 
-*EduTrack Africa Development Roadmap — Version 1.0 — May 2026*
-*Total estimated duration: 12–18 months (solo developer) | 8–10 months (team of 3)*
+_EduTrack Africa Development Roadmap — Version 1.0 — May 2026_
+_Total estimated duration: 12–18 months (solo developer) | 8–10 months (team of 3)_
