@@ -36,3 +36,41 @@ jobs:
 
       - name: Unit tests (Vitest)
         run: pnpm test
+
+  postgres-drizzle:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: edutrack
+          POSTGRES_PASSWORD: edutrack
+          POSTGRES_DB: edutrack
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U edutrack -d edutrack"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    env:
+      DATABASE_URL: postgresql://edutrack:edutrack@localhost:5432/edutrack
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Drizzle migrate + seed (PostgreSQL)
+        run: |
+          pnpm db:migrate:pg
+          pnpm db:seed:pg
