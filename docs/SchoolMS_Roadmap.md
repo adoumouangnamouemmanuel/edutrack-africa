@@ -242,13 +242,21 @@ Do not build any UI yet. Solid foundations here mean everything else is easier.
 
 Write migrations for every table defined in the UML, in dependency order:
 
-**Week 3 — Core entities:**
+**Week 3 — Core entities: ✅ COMPLETED (May 4, 2026)**
 
-- [ ] `school`
-- [ ] `academic_year`
-- [ ] `term`
-- [ ] `class_level`
-- [ ] `user`
+- [x] `school` (Phase 0)
+- [x] `academic_year` (Phase 0)
+- [x] `term` (entity file + migrations generated & applied)
+- [x] `class_level` (entity file + migrations generated & applied)
+- [x] `user` (Phase 0)
+- [x] `subject` (entity file + migrations generated & applied)
+
+**Refactoring notes:**
+
+- Migrated to entity-based single-source-of-truth architecture (`packages/db/src/schema/entities/`)
+- Each entity file contains both SQLite and Postgres implementations with shared interfaces
+- Changes in one file now sync both database dialects automatically
+- Backward compatibility maintained via re-export files
 
 **Week 4 — People entities:**
 
@@ -260,7 +268,6 @@ Write migrations for every table defined in the UML, in dependency order:
 
 **Week 5 — Curriculum & Classes:**
 
-- [ ] `subject`
 - [ ] `classroom`
 - [ ] `class_subject`
 - [ ] `class_enrollment`
@@ -291,9 +298,23 @@ Write migrations for every table defined in the UML, in dependency order:
 
 In `packages/shared/src/types/`, define TypeScript interfaces for every entity. These are shared between frontend and backend — they are your contract.
 
+**Status: Partially complete**
+
+- [x] `academic.types.ts` (Term, ClassLevel, Subject)
+- [ ] `school.types.ts`
+- [ ] `user.types.ts`
+- [ ] `student.types.ts`
+- [ ] `teacher.types.ts`
+- [ ] `classroom.types.ts`
+- [ ] `transcript.types.ts`
+- [ ] `finance.types.ts`
+- [ ] `timetable.types.ts`
+- [ ] `resource.types.ts`
+
 ```
 packages/shared/src/
 ├── types/
+│   ├── academic.types.ts   ✅ (Term, ClassLevel, Subject)
 │   ├── school.types.ts
 │   ├── user.types.ts
 │   ├── student.types.ts
