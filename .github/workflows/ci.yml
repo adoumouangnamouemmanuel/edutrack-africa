@@ -45,9 +45,9 @@ jobs:
           POSTGRES_PASSWORD: EDU90062033track
           POSTGRES_DB: edutrack
         ports:
-          - 5433:5433
+          - 5433:5432
         options: >-
-          --health-cmd "pg_isready -U edutrack -d edutrack -h localhost -p 5433"
+          --health-cmd "pg_isready -U edutrack -d edutrack -h localhost -p 5432"
           --health-interval 5s
           --health-timeout 5s
           --health-retries 12
