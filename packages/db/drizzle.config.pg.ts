@@ -7,6 +7,6 @@ export default defineConfig({
   dbCredentials: {
     url:
       process.env.DATABASE_URL ??
-      "postgresql://edutrack:edutrack@127.0.0.1:5432/edutrack",
+      "postgresql://edutrack:edutrack@127.0.0.1:5433/edutrack",
   },
 });
