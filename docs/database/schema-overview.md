@@ -214,6 +214,117 @@ Curriculum subjects taught at the school (Mathématiques, Français, Sciences, e
 
 ---
 
+## Week 4 People Entities
+
+### `student`
+
+Student profile linked to an authentication account.
+
+| Column              | Type                  | Constraints                               | Notes                                              |
+| ------------------- | --------------------- | ----------------------------------------- | -------------------------------------------------- |
+| `id`                | TEXT / text           | PRIMARY KEY                               | UUID                                               |
+| `user_id`           | TEXT / text           | FK → `user.id` ON DELETE CASCADE + UNIQUE | One login per student profile                      |
+| `school_id`         | TEXT / text           | FK → `school.id` ON DELETE CASCADE        | Multi-school scope                                 |
+| `student_code`      | TEXT / text           | NOT NULL + UNIQUE per school              | Auto-generated school code                         |
+| `first_name`        | TEXT / text           | NOT NULL                                  | Given name                                         |
+| `last_name`         | TEXT / text           | NOT NULL                                  | Family name                                        |
+| `date_of_birth`     | TEXT / text           | NOT NULL                                  | ISO date string                                    |
+| `gender`            | TEXT / text           | NOT NULL                                  | `male` \| `female`                                 |
+| `address`           | TEXT / text           | —                                         | Optional                                           |
+| `phone`             | TEXT / text           | —                                         | Optional                                           |
+| `email`             | TEXT / text           | —                                         | Optional                                           |
+| `nationality`       | TEXT / text           | —                                         | Optional                                           |
+| `profile_photo_url` | TEXT / text           | —                                         | Optional                                           |
+| `status`            | TEXT / text           | DEFAULT `active`                          | `active` \| `graduated` \| `transferred` \| `drop` |
+| `enrollment_date`   | TEXT / text           | NOT NULL                                  | ISO date string                                    |
+| `created_at`        | INTEGER / timestamptz | NOT NULL                                  | Set on insert                                      |
+| `updated_at`        | INTEGER / timestamptz | —                                         | Optional audit field                               |
+
+**Indexes:** `student_user_id_unique`, `student_school_id_student_code_unique`, `student_school_id_idx`
+
+### `parent`
+
+Student guardian/contact record.
+
+| Column                 | Type                  | Constraints                         | Notes                                         |
+| ---------------------- | --------------------- | ----------------------------------- | --------------------------------------------- |
+| `id`                   | TEXT / text           | PRIMARY KEY                         | UUID                                          |
+| `student_id`           | TEXT / text           | FK → `student.id` ON DELETE CASCADE | Parent belongs to one student profile         |
+| `relation`             | TEXT / text           | NOT NULL                            | `father` \| `mother` \| `guardian` \| `tutor` |
+| `first_name`           | TEXT / text           | NOT NULL                            |                                               |
+| `last_name`            | TEXT / text           | NOT NULL                            |                                               |
+| `phone`                | TEXT / text           | —                                   | Optional                                      |
+| `email`                | TEXT / text           | —                                   | Optional                                      |
+| `address`              | TEXT / text           | —                                   | Optional                                      |
+| `occupation`           | TEXT / text           | —                                   | Optional                                      |
+| `is_emergency_contact` | INTEGER / boolean     | DEFAULT false                       | Primary contact flag                          |
+| `created_at`           | INTEGER / timestamptz | NOT NULL                            | Set on insert                                 |
+
+**Indexes:** `parent_student_id_idx`, `parent_student_id_relation_idx`
+
+### `teacher`
+
+Teacher profile linked to an authentication account.
+
+| Column                | Type                  | Constraints                               | Notes                                  |
+| --------------------- | --------------------- | ----------------------------------------- | -------------------------------------- |
+| `id`                  | TEXT / text           | PRIMARY KEY                               | UUID                                   |
+| `user_id`             | TEXT / text           | FK → `user.id` ON DELETE CASCADE + UNIQUE | One login per teacher profile          |
+| `school_id`           | TEXT / text           | FK → `school.id` ON DELETE CASCADE        | Multi-school scope                     |
+| `employee_code`       | TEXT / text           | NOT NULL + UNIQUE per school              | School staff code                      |
+| `first_name`          | TEXT / text           | NOT NULL                                  |                                        |
+| `last_name`           | TEXT / text           | NOT NULL                                  |                                        |
+| `date_of_birth`       | TEXT / text           | —                                         | Optional                               |
+| `gender`              | TEXT / text           | —                                         | Optional                               |
+| `address`             | TEXT / text           | —                                         | Optional                               |
+| `phone`               | TEXT / text           | —                                         | Optional                               |
+| `email`               | TEXT / text           | —                                         | Optional                               |
+| `profile_photo_url`   | TEXT / text           | —                                         | Optional                               |
+| `hire_date`           | TEXT / text           | —                                         | Optional                               |
+| `years_of_experience` | INTEGER / integer     | —                                         | Optional                               |
+| `qualification`       | TEXT / text           | —                                         | Optional                               |
+| `status`              | TEXT / text           | DEFAULT `active`                          | `active` \| `on_leave` \| `terminated` |
+| `created_at`          | INTEGER / timestamptz | NOT NULL                                  | Set on insert                          |
+
+**Indexes:** `teacher_user_id_unique`, `teacher_school_id_employee_code_unique`, `teacher_school_id_idx`
+
+### `family_member`
+
+Teacher dependent / family contact record.
+
+| Column          | Type                  | Constraints                         | Notes                           |
+| --------------- | --------------------- | ----------------------------------- | ------------------------------- |
+| `id`            | TEXT / text           | PRIMARY KEY                         | UUID                            |
+| `teacher_id`    | TEXT / text           | FK → `teacher.id` ON DELETE CASCADE | Belongs to a teacher            |
+| `relation`      | TEXT / text           | NOT NULL                            | `spouse` \| `child` \| `parent` |
+| `first_name`    | TEXT / text           | NOT NULL                            |                                 |
+| `last_name`     | TEXT / text           | NOT NULL                            |                                 |
+| `date_of_birth` | TEXT / text           | —                                   | Optional                        |
+| `phone`         | TEXT / text           | —                                   | Optional                        |
+| `created_at`    | INTEGER / timestamptz | NOT NULL                            | Set on insert                   |
+
+**Indexes:** `family_member_teacher_id_idx`
+
+### `salary`
+
+Teacher payroll records. Amount is stored as an integer in cents/hundredths.
+
+| Column           | Type                  | Constraints                         | Notes                            |
+| ---------------- | --------------------- | ----------------------------------- | -------------------------------- |
+| `id`             | TEXT / text           | PRIMARY KEY                         | UUID                             |
+| `teacher_id`     | TEXT / text           | FK → `teacher.id` ON DELETE CASCADE | Payroll owner                    |
+| `amount`         | INTEGER / integer     | NOT NULL                            | Stored as cents/hundredths       |
+| `effective_date` | TEXT / text           | NOT NULL                            | Salary period start              |
+| `payment_date`   | TEXT / text           | —                                   | Optional                         |
+| `payment_method` | TEXT / text           | —                                   | Optional                         |
+| `status`         | TEXT / text           | DEFAULT `pending`                   | `paid` \| `pending` \| `partial` |
+| `notes`          | TEXT / text           | —                                   | Optional                         |
+| `created_at`     | INTEGER / timestamptz | NOT NULL                            | Set on insert                    |
+
+**Indexes:** `salary_teacher_id_effective_date_unique`, `salary_teacher_id_idx`, `salary_status_idx`, `salary_payment_date_idx`
+
+---
+
 ## Indexes & Performance
 
 ### Why Indexes Matter
@@ -428,15 +539,13 @@ Both scripts are **idempotent** — safe to run multiple times.
 
 ---
 
-## Next Phase: Week 4 People Entities
+## Next Phase: Week 5 Curriculum & Classes
 
-(Placeholder for future documentation)
+Week 4 people entities are now implemented at the schema level.
 
-- `student` — student profiles with enrollment status
-- `parent` / `student_parent` — family relationships
-- `teacher` — teacher profiles with salary tracking
-- `family_member` — teacher dependents
-- `salary` — payroll records
+- `classroom` — homeroom and section definitions
+- `class_subject` — class-to-subject assignments
+- `class_enrollment` — student placement history
 
 ### SQLite migration order
 
