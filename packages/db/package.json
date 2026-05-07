@@ -16,6 +16,8 @@
     "db:migrate:pg": "tsx scripts/migrate-pg.ts",
     "db:seed": "tsx scripts/seed-sqlite.ts",
     "db:seed:pg": "tsx scripts/seed-pg.ts",
+    "db:prepare": "pnpm db:generate && pnpm db:migrate && pnpm db:seed",
+    "db:prepare:pg": "pnpm db:generate && pnpm db:migrate:pg && pnpm db:seed:pg",
     "db:studio": "drizzle-kit studio --config drizzle.config.sqlite.ts"
   },
   "dependencies": {
