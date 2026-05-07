@@ -26,6 +26,8 @@
     "db:migrate:pg": "pnpm --filter @edutrack/db db:migrate:pg",
     "db:seed": "pnpm --filter @edutrack/db db:seed",
     "db:seed:pg": "pnpm --filter @edutrack/db db:seed:pg",
+    "db:prepare": "pnpm --filter @edutrack/db db:prepare",
+    "db:prepare:pg": "pnpm --filter @edutrack/db db:prepare:pg",
     "db:studio": "pnpm --filter @edutrack/db db:studio"
   },
   "devDependencies": {
